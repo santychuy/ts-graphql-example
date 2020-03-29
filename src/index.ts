@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 
+import './database';
 import { startServer } from './app';
 import { welcomeLogs } from './constants/welcomeLogs';
 
