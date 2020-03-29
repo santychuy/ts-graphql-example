@@ -1,10 +1,11 @@
 import 'reflect-metadata';
+
 import { startServer } from './app';
+import { welcomeLogs } from './constants/welcomeLogs';
 
 (async (): Promise<void> => {
 	const app = await startServer();
-	const port = app.get('port');
+	const port: number = app.get('port');
 	app.listen(port);
-	console.log(`>> Server on: http://localhost:${port}`);
-	console.log(`>> Graphql Playground: http://localhost:${port}/api`);
+	welcomeLogs(port);
 })();
