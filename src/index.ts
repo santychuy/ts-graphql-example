@@ -5,5 +5,6 @@ import { startServer } from './app';
 	const app = await startServer();
 	const port = app.get('port');
 	app.listen(port);
-	console.log('>> Server on port:', port);
+	console.log(`>> Server on: http://localhost:${port}`);
+	console.log(`>> Graphql Playground: http://localhost:${port}/api`);
 })();
