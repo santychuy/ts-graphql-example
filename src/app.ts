@@ -1,12 +1,9 @@
-import { ApolloServer } from 'apollo-server-express';
 import express, { Application } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
-import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 
-import { Ping } from './graphql/resolvers/ping';
-import { RegisterResolver } from './graphql/resolvers/Register';
+import { initGraphql } from './graphql';
 
 export const startServer = async (): Promise<Application> => {
 	await createConnection();
@@ -17,13 +14,7 @@ export const startServer = async (): Promise<Application> => {
 	app.use(helmet());
 	app.use(cors());
 
-	/* Config Graphql */
-	const schema = await buildSchema({
-		resolvers: [Ping, RegisterResolver],
-	});
-	const server = new ApolloServer({ schema });
-	server.applyMiddleware({ app, path: '/api' });
-	/* --------------- */
+	initGraphql(app);
 
 	return app;
 };
