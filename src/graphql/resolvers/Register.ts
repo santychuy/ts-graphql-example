@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
-import { hash, genSalt } from 'bcryptjs';
 
+import { registerUser } from '../controllers/Register.controller';
 import { User } from '../../entity/User';
 
 @Resolver()
@@ -20,17 +20,7 @@ export class RegisterResolver {
 		@Arg('email') email: string,
 		@Arg('password') password: string
 	): Promise<User> {
-		/* Logica de este endpoint */
-		const salt = await genSalt(13);
-		const hashedPassword = await hash(password, salt);
-
-		const user = await User.create({
-			firstName,
-			lastName,
-			email,
-			password: hashedPassword,
-		}).save();
-		/* ------------------------ */
+		const user = await registerUser(firstName, lastName, email, password);
 		return user;
 	}
 }
