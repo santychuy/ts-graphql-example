@@ -2,6 +2,11 @@ import { hash, genSalt } from 'bcryptjs';
 
 import { User } from '../../entity/User';
 
+export const getUsers = async (): Promise<User[]> => {
+	const users = await User.find();
+	return users;
+};
+
 export const registerUser = async (
 	firstName: string,
 	lastName: string,

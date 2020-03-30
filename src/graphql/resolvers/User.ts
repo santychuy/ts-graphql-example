@@ -1,13 +1,14 @@
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 
-import { registerUser } from '../controllers/Register.controller';
+import { registerUser, getUsers } from '../controllers/User.controller';
 import { User } from '../../entity/User';
 
 @Resolver()
-export class RegisterResolver {
-	@Query(() => String)
-	init(): string {
-		return 'Hello Register Resolver';
+export class UserResolver {
+	@Query(() => [User], { name: 'GetUsers', description: 'Get Users from DB' })
+	async getUsers(): Promise<User[]> {
+		const users = await getUsers();
+		return users;
 	}
 
 	@Mutation(() => User, {
